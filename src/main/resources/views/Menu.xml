@@ -6,25 +6,26 @@
 
 
 	<menuitem name="axelor-events-root" title="Events" order="-86"
-		icon="fa-eur" />
+		icon="" />
 
 	<menuitem name="axelor-events-root-event" parent="axelor-events-root"
 		title="Event" action="action.events.event.view" order="1" />
 
 	<action-view name="action.events.event.view" model="com.axelor.apps.events.db.Event"
 		title="Event">
-		<view type="cards" name="" />
-		<view type="grid" name="" />
-		<view type="form" name="" />
+		<view type="cards" name="event-cards" />
+		<view type="grid" name="event-grid" />
+		<view type="form" name="event-form" />
 	</action-view>
 
 	<menuitem name="axelor-events-root-event-registration" parent="axelor-events-root"
-		title="Event Registration" action="action.events.event.registration.view" order="2" />
+		title="Event Registration" action="action.events.event.registration.view"
+		order="2" />
 
 	<action-view name="action.events.event.registration.view"
 		model="com.axelor.apps.events.db.EventRegistration" title="Event Registration">
-		<view type="grid" name="" />
-		<view type="form" name="" />
+		<view type="grid" name="event-registration-grid" />
+		<view type="form" name="event-registration-form" />
 	</action-view>
 
 	<menuitem name="axelor-events-root-address" parent="axelor-events-root"
@@ -32,8 +33,8 @@
 
 	<action-view name="action.events.address.view" model="com.axelor.apps.events.db.Address"
 		title="Address">
-		<view type="grid" name="" />
-		<view type="form" name="" />
+		<view type="grid" name="address-grid" />
+		<view type="form" name="address-form" />
 	</action-view>
 
 
