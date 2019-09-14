@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<states>
+<state>
+<name>Delhi</name>
+<country.id>82</country.id>
+</state>
+<state>
+<name>West Bengal</name>
+<country.id>82</country.id>
+</state>
+</states>

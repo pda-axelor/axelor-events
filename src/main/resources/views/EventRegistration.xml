@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+
+	<grid name="event-registration-grid" title="Event Registration"
+		model="com.axelor.apps.events.db.EventRegistration" orderBy="name"
+		x-row-height="80">
+
+		<field name="event" />
+		<field name="name" />
+		<field name="email" />
+		<field name="address" />
+		<field name="registrationDate" />
+		<field name="amount" />
+
+	</grid>
+
+
+
+	<form name="event-registration-form" title="Event Registration"
+		model="com.axelor.apps.events.db.EventRegistration" width="large">
+
+		<panel name="mainPanel">
+
+
+			<field name="name" />
+			<field name="event" />
+			<field name="email" widget="email" />
+			<field name="address" />
+			<field name="registrationDate" />
+			<field name="amount" />
+
+
+		</panel>
+	</form>
+
+</object-views>

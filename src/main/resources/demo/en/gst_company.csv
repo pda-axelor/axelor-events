@@ -1,0 +1,3 @@
+"name";"code";"address.importId";"partner.importId";"logo_fileName";"currency.code";"defaultBankDetails.importId";"bankDetailsSet_id";"generatedMailFilePath";"generatedEmailFilePath";"generatedMailFileName";"generatedEmailFileName";"printingSettings.importId"
+"Marvel3";"MAR3";90000;90000;"img/axelor-logo.png";"EUR";1;1|90000;"/home/axelor/mail/";"/home/axelor/email/";"mail";"email";1
+	

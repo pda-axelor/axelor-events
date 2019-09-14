@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+
+	<grid name="event-grid" title="Event" model="com.axelor.apps.events.db.Event"
+		 x-row-height="80">
+
+		<field name="reference" />
+		<field name="startDate" />
+		<field name="endDate" />
+		<field name="capacity" />
+		<field name="eventFees" />
+		<field name="totalEntry" />
+		<field name="amountCollected" />
+		<field name="totalDiscount" />
+
+	</grid>
+
+
+
+	<form name="event-form" title="Event" model="com.axelor.apps.events.db.Event"
+
+		width="large">
+
+		<panel name="mainPanel">
+			<panel name="detailsPanel" colSpan="4">
+				<field name="reference" colSpan="12" />
+				<field name="venue" />
+				<field name="capacity" />
+				<field name="eventFees" />
+				<field name="discounts" />
+				<field name="eventRegistration" />
+				<field name="totalEntry" />
+				<field name="amountCollected" />
+				<field name="totalDiscount" />
+
+			</panel>
+			<panel name="descriptionPanel">
+				<field name="description" />
+			</panel>
+
+			<panel name="datesPanel" sidebar="true">
+				<field name="startDate" />
+				<field name="endDate" />
+				<field name="registrationOpen" />
+				<field name="registrationClose" />
+			</panel>
+
+		</panel>
+	</form>
+
+	<cards name="event-cards" title="Event" model="com.axelor.apps.events.db.Event"
+		width="25%" css="rect-image" orderBy="name">
+
+		<field name="reference" />
+		<field name="startDate" />
+		<field name="endDate" />
+		<field name="capacity" />
+		<field name="eventFees" />
+
+		<template><![CDATA[
+		    <div class="span12"><strong>{{reference}}</strong></div>
+			<div>
+	
+			  <div class="span8">
+			    <span>
+			    {{startDate}}<br/>
+			    {{endDate}}</span>
+			  </div>
+			</div>
+			<div class="span12" ng-bind-html="description"></div>
+			<div class="span12" style="margin-left:0px;">
+	  			<span >{{totalFees}}</span>
+			</div>
+		]]>
+		</template>
+	</cards>
+
+
+
+</object-views>
