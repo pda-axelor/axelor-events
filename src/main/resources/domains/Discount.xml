@@ -8,8 +8,8 @@
 	<entity sequential="true" name="Discount" lang="java">
 
 		<integer name="beforeDays" title="Before Days" />
-		<string name="discountPercent" title="Discount Percent" />
-		<string name="discountAmount" title="Discount Amount" />
+		<decimal name="discountPercent" title="Discount Percent" />
+		<decimal name="discountAmount" title="Discount Amount" />
 
 	</entity>
 

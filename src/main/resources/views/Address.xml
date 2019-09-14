@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
 
-	<grid name="address-grid" title="Event Registration"
+	<grid name="address-grid"  title="Address"
 		model="com.axelor.apps.events.db.Address" x-row-height="80">
 
 		<field name="houseNo" />
@@ -18,9 +18,9 @@
 
 
 	<form name="address-form" title="Address"
-		model="com.axelor.apps.events.db.Address" width="large">
+		model="com.axelor.apps.events.db.Address" width="large" onSave="action-record-set-full-address">
 
-		<panel name="mainPanel">
+		<panel name="address-overview">
 
 
 			<field name="houseNo" />
@@ -28,9 +28,13 @@
 			<field name="landmark" />
 			<field name="city" />
 			<field name="country" />
-			<field name="fullName" />
+			<field name="fullName" widget="html"/>
 
 		</panel>
 	</form>
+	
+	<action-record name="action-record-set-full-address" model="com.axelor.apps.events.db.Address">
+		<field name="fullName" expr="eval: houseNo+' '+street+' '+landmark+' '+city+' '+country " />
+	</action-record>
 
 </object-views>

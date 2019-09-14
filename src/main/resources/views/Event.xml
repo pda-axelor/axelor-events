@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
 
 	<grid name="event-grid" title="Event" model="com.axelor.apps.events.db.Event"
-		 x-row-height="80">
+		x-row-height="80">
 
 		<field name="reference" />
 		<field name="startDate" />
@@ -21,37 +21,37 @@
 
 	<form name="event-form" title="Event" model="com.axelor.apps.events.db.Event"
 
-		width="large">
+		width="large" onSave="action-event-validate">
 
-		<panel name="mainPanel">
-			<panel name="detailsPanel" colSpan="4">
-				<field name="reference" colSpan="12" />
-				<field name="venue" />
-				<field name="capacity" />
-				<field name="eventFees" />
-				<field name="discounts" />
-				<field name="eventRegistration" />
-				<field name="totalEntry" />
-				<field name="amountCollected" />
-				<field name="totalDiscount" />
 
-			</panel>
-			<panel name="descriptionPanel">
-				<field name="description" />
-			</panel>
-
-			<panel name="datesPanel" sidebar="true">
-				<field name="startDate" />
-				<field name="endDate" />
-				<field name="registrationOpen" />
-				<field name="registrationClose" />
-			</panel>
+		<panel name="detailsPanel" colSpan="4">
+			<field name="reference" colSpan="12" />
+			<field name="venue" />
+			<field name="capacity" />
+			<field name="eventFees" />
+			<field name="discount" onChange="action.method.set.amount" />
+			<field name="eventRegistrationList" canNew="false" />
+			<field name="totalEntry" />
+			<field name="amountCollected" />
+			<field name="totalDiscount" />
 
 		</panel>
+		<panel name="eventsDescriptionPanel">
+			<field name="description" />
+		</panel>
+
+		<panel name="datesPanel" sidebar="true">
+			<field name="startDate" required="true" />
+			<field name="endDate" required="true" />
+			<field name="registrationOpen" required="true" />
+			<field name="registrationClose" required="true" />
+		</panel>
+
+
 	</form>
 
 	<cards name="event-cards" title="Event" model="com.axelor.apps.events.db.Event"
-		width="25%" css="rect-image" orderBy="name">
+		width="25%" css="rect-image">
 
 		<field name="reference" />
 		<field name="startDate" />
@@ -77,6 +77,18 @@
 		</template>
 	</cards>
 
+	<action-validate name="action-event-validate">
+		<error message="Event Start Date cannot be in past" if="startDate &lt; LocalDate().now()" />
+		<error message="Start Date should be before End Date" if="startDate &gt; endDate" />
+		<error
+			message="Registration Open Date should be before Registration Close Date"
+			if="registrationOpen &gt; registrationClose" />
+		<error message="Registration Close date must be Before Event Start Date"
+			if="registrationClose &gt; startDate" />
+	</action-validate>
 
+	<action-method name="action.method.set.amount">
+		<call class="com.axelor.apps.events.web.EventController" method="setTotalAmount" />
+	</action-method>
 
 </object-views>

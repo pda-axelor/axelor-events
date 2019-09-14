@@ -19,13 +19,14 @@
 
 
 	<form name="event-registration-form" title="Event Registration"
-		model="com.axelor.apps.events.db.EventRegistration" width="large">
+		model="com.axelor.apps.events.db.EventRegistration" width="large"
+		onSave="save,action.group.registration.on.save">
 
-		<panel name="mainPanel">
+		<panel name="registration-overview">
 
 
 			<field name="name" />
-			<field name="event" />
+			<field name="event" onChange="action-method-set-amount"/>
 			<field name="email" widget="email" />
 			<field name="address" />
 			<field name="registrationDate" />
@@ -34,5 +35,24 @@
 
 		</panel>
 	</form>
+
+	<action-group name="action.group.registration.on.save">
+		<action name="action.method.set.total" />
+	</action-group>
+
+    <action-method name="action.method.validate.date">
+    <call class="com.axelor.apps.events.web.EventRegistrationController"
+			method="validateDates"/>
+    </action-method>
+
+	<action-method name="action.method.set.total" >
+		<call class="com.axelor.apps.events.web.EventRegistrationController"
+			method="setTotal" />
+	</action-method>
+	
+	<action-method name="action-method-set-amount">
+		<call class="com.axelor.apps.events.web.EventRegistrationController"
+			method="setAmount" />
+	</action-method>
 
 </object-views>

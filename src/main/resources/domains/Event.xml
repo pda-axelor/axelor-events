@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<domain-models xmlns="http://axelor.com/xml/ns/domain-models" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_5.0.xsd">
-  
-  <module name="events" package="com.axelor.apps.events.db"/>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_5.0.xsd">
 
-  <entity sequential="true" name="Event" lang="java">
-    		
-    	<string name="reference" title="Reference" namecolumn="true"/>
-		<datetime name="startDate" title="Start Date"/>
-		<datetime name="endDate" title="End Date"/>
+	<module name="events" package="com.axelor.apps.events.db" />
+
+	<entity sequential="true" name="Event" lang="java">
+
+		<string name="reference" title="Reference" namecolumn="true" />
+		<datetime name="startDate" title="Start Date" />
+		<datetime name="endDate" title="End Date" />
 		<many-to-one name="venue" ref="com.axelor.apps.events.db.Address" />
 		<date name="registrationOpen" title="Registration Open" />
 		<date name="registrationClose" title="Registration Close" />
-		<integer name="capacity" title="Capacity" />	
+		<integer name="capacity" title="Capacity" />
 		<decimal name="eventFees" title="Event Fees" />
 		<string name="description" title="Description" />  <!-- Change to text html -->
-		<one-to-many name="discount" title="Discount" ref="com.axelor.apps.events.db.Discount"/>
-		<one-to-many name="eventRegistration" title="Event Registration" ref="com.axelor.apps.events.db.EventRegistration"/>	
-		<integer name="totalEntry" title="Total Entry" readonly="true"/>
-		<decimal name="amountCollected" title="Amount Collected" readonly="true"/>
-		<decimal name="totalDiscount" title="Total Discount" readonly="true"/>
-		
-  </entity>
-  
+		<one-to-many name="discount" title="Discount"
+			ref="com.axelor.apps.events.db.Discount" />
+		<one-to-many name="eventRegistrationList" title="Event Registration"
+			ref="com.axelor.apps.events.db.EventRegistration" mappedBy="event" />
+		<integer name="totalEntry" title="Total Entry" readonly="true" />
+		<decimal name="amountCollected" title="Amount Collected"
+			readonly="true" />
+		<decimal name="totalDiscount" title="Total Discount" readonly="true" />
+
+	</entity>
+
 </domain-models>
