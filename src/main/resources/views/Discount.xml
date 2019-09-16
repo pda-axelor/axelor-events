@@ -3,17 +3,35 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
 
+	<grid name="discount-grid" title="Discount"
+		model="com.axelor.apps.events.db.Discount" x-row-height="80">
+
+		<field name="beforeDays" />
+		<field name="discountPercent" />
+		<field name="discountAmount" />
+
+	</grid>
+
+
 	<form name="discount-form" title="Discount"
 		model="com.axelor.apps.events.db.Discount" width="large">
 
 		<panel name="mainPanel">
 
-			<field name="beforeDays" />
+			<field name="beforeDays" onChange="action-event-dicount-before-days-validate" />
 			<field name="discountPercent" onChange="set-discount-amount" />
 			<field name="discountAmount" />
 
 		</panel>
 	</form>
+
+
+	<action-condition name="action-event-dicount-before-days-validate">
+		<check field="beforeDays"
+			if="beforeDays &gt; __parent__.registrationOpen.until(__parent__.registrationClose).getDays()"
+			error="Before Days shouldn't exceed total Registration Days" />
+
+	</action-condition>
 
 
 	<action-record name="set-discount-amount" model="com.axelor.apps.events.db.Discount">

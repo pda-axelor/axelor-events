@@ -17,28 +17,48 @@
 
 	</grid>
 
-
+	<calendar name="event-calendar" title="Event"
+		model="com.axelor.apps.events.db.Event" colorBy="reference"
+		eventStart="startDate" eventStop="endDate">
+		<field name="reference" />
+	</calendar>
 
 	<form name="event-form" title="Event" model="com.axelor.apps.events.db.Event"
-
 		width="large" onSave="action-event-validate">
 
+		<toolbar>
+			<button name="btnImport" icon="fa-download" title="Import Registrations"
+				onClick="" readonlyIf="!id" />
+			<button name="btnPrint" icon="fa-print" title="Print"
+				onClick="action-event-report" readonlyIf="!id" />	
+		</toolbar>
 
 		<panel name="detailsPanel" colSpan="4">
 			<field name="reference" colSpan="12" />
 			<field name="venue" />
 			<field name="capacity" />
 			<field name="eventFees" />
-			<field name="discount" onChange="action.method.set.amount" />
-			<field name="eventRegistrationList" canNew="false" />
+
+
 			<field name="totalEntry" />
 			<field name="amountCollected" />
 			<field name="totalDiscount" />
 
 		</panel>
-		<panel name="eventsDescriptionPanel">
-			<field name="description" />
-		</panel>
+		<panel-tabs>
+			<panel name="discountPanel" title="Discount">
+				<field name="discount" />
+			</panel>
+			<panel name="eventRegistrationListPanel" title="Registrations">
+				<field name="eventRegistrationList" canNew="false" />
+			</panel>
+
+			<panel name="eventsDescriptionPanel" title="Description">
+				<field name="description" widget="html" />
+			</panel>
+
+		</panel-tabs>
+
 
 		<panel name="datesPanel" sidebar="true">
 			<field name="startDate" required="true" />
@@ -77,18 +97,27 @@
 		</template>
 	</cards>
 
-	<action-validate name="action-event-validate">
-		<error message="Event Start Date cannot be in past" if="startDate &lt; LocalDate().now()" />
-		<error message="Start Date should be before End Date" if="startDate &gt; endDate" />
-		<error
-			message="Registration Open Date should be before Registration Close Date"
-			if="registrationOpen &gt; registrationClose" />
-		<error message="Registration Close date must be Before Event Start Date"
-			if="registrationClose &gt; startDate" />
-	</action-validate>
 
-	<action-method name="action.method.set.amount">
-		<call class="com.axelor.apps.events.web.EventController" method="setTotalAmount" />
-	</action-method>
+	<action-validate name="action-event-validate">
+		<error if="startDate.isBefore(__datetime__.toLocalDateTime())"
+			message="Event Start Date cannot be today or in past" />
+		<error
+			if="startDate.isBefore(registrationClose.atStartOfDay()) || startDate.equals(registrationClose.atStartOfDay())"
+			message="Start Date should be after Registration Close Date" />
+		<error if="startDate > endDate || startDate == endDate" message="Start Date should be before End Date" />
+		<error
+			if="registrationOpen > registrationClose || registrationOpen == registrationClose "
+			message="Registration Open Date should be before Registration Close Date" />
+	</action-validate>
+	
+	<action-view name="action.event.wizard.view" model="com.axelor.apps.events.db.Wizard"
+		title="Data Import">
+		<view type="form" name="event-pop-up-form" />
+	</action-view>
+	
+	<action-report name="action-event-report" design="event.rptdesign"
+		output="event" format="pdf">
+		<param name="eventId" expr="eval: id" />
+	</action-report>
 
 </object-views>

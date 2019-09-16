@@ -12,20 +12,25 @@ import com.google.inject.Inject;
 
 public class EventRegistrationController {
 
-  @Inject EventService eventService;
-  
-  @Inject EventRegistrationService eventRegistrationService;
+	@Inject
+	EventService eventService;
 
-  public void setTotal(ActionRequest request, ActionResponse response) {
-    EventRegistration eventRegistration = request.getContext().asType(EventRegistration.class);
-    Event event = Beans.get(EventRepository.class).find(eventRegistration.getEvent().getId());
-    eventService.calculateTotal(event);
-  }
-  
-  public void setAmount(ActionRequest request, ActionResponse response) {
-	    EventRegistration eventRegistration = request.getContext().asType(EventRegistration.class);
-	    Event event = Beans.get(EventRepository.class).find(eventRegistration.getEvent().getId());
-	   
-	    response.setValue("amount", eventRegistrationService.calculateAmount(event, eventRegistration));
-	  }
+	@Inject
+	EventRegistrationService eventRegistrationService;
+
+	public void setTotal(ActionRequest request, ActionResponse response) {
+		EventRegistration eventRegistration = request.getContext().asType(EventRegistration.class);
+		Event event = Beans.get(EventRepository.class).find(eventRegistration.getEvent().getId());
+		eventService.calculateTotal(event);
+	}
+
+	public void setAmount(ActionRequest request, ActionResponse response) {
+		EventRegistration eventRegistration = request.getContext().asType(EventRegistration.class);
+		if (eventRegistration.getRegistrationDate() != null) {
+			if (eventRegistration.getEvent() != null) {
+				Event event = Beans.get(EventRepository.class).find(eventRegistration.getEvent().getId());
+				response.setValue("amount", eventRegistrationService.calculateAmount(event, eventRegistration));
+			}
+		}
+	}
 }

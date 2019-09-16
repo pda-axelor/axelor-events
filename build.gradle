@@ -11,4 +11,8 @@ axelor {
 	description "Axelor Events Module"
 }
 
+dependencies {
+	compile project(":modules:axelor-message")
+}
+
 

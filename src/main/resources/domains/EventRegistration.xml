@@ -11,7 +11,7 @@
 		<string name="name" title="Name" />
 		<string name="email" title="Email" />
 		<many-to-one name="address" ref="com.axelor.apps.events.db.Address" />
-		<datetime name="registrationDate" title="Registration Date" />
+		<datetime name="registrationDate" title="Registration Date" required="true"/>
 		<decimal name="amount" title="Amount" readonly="true"/>
 
 	</entity>
