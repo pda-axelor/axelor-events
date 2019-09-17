@@ -10,6 +10,7 @@
 		<many-to-one name="event" ref="com.axelor.apps.events.db.Event" />
 		<string name="name" title="Name" />
 		<string name="email" title="Email" />
+		<boolean name="emailSent" default="false"/>
 		<many-to-one name="address" ref="com.axelor.apps.events.db.Address" />
 		<datetime name="registrationDate" title="Registration Date" required="true"/>
 		<decimal name="amount" title="Amount" readonly="true"/>

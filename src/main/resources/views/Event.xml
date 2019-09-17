@@ -28,9 +28,11 @@
 
 		<toolbar>
 			<button name="btnImport" icon="fa-download" title="Import Registrations"
-				onClick="" readonlyIf="!id" />
+				onClick="action.event.wizard.view" readonlyIf="!id" />
 			<button name="btnPrint" icon="fa-print" title="Print"
-				onClick="action-event-report" readonlyIf="!id" />	
+				onClick="action-event-report" readonlyIf="!id" />
+			<button name="sendEmailBtn" title="Send Email" icon="fa-envelope"
+				showIf="id" onClick="com.axelor.apps.events.web.EventController:sendEmails" />
 		</toolbar>
 
 		<panel name="detailsPanel" colSpan="4">
@@ -50,7 +52,7 @@
 				<field name="discount" />
 			</panel>
 			<panel name="eventRegistrationListPanel" title="Registrations">
-				<field name="eventRegistrationList" canNew="false" />
+				<field name="eventRegistrationList" />
 			</panel>
 
 			<panel name="eventsDescriptionPanel" title="Description">
@@ -109,12 +111,12 @@
 			if="registrationOpen > registrationClose || registrationOpen == registrationClose "
 			message="Registration Open Date should be before Registration Close Date" />
 	</action-validate>
-	
-	<action-view name="action.event.wizard.view" model="com.axelor.apps.events.db.Wizard"
+
+	<action-view name="action.event.wizard.view" model="com.axelor.apps.events.db.EventWizard"
 		title="Data Import">
 		<view type="form" name="event-pop-up-form" />
 	</action-view>
-	
+
 	<action-report name="action-event-report" design="event.rptdesign"
 		output="event" format="pdf">
 		<param name="eventId" expr="eval: id" />

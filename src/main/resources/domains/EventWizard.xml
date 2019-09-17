@@ -5,7 +5,7 @@
 
 	<module name="events" package="com.axelor.apps.events.db" />
 
-	<entity sequential="true" name="Wizard" lang="java">
+	<entity sequential="true" name="EventWizard" lang="java">
 	</entity>
 
 </domain-models>

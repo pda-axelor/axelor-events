@@ -1,6 +1,3 @@
 package com.axelor.apps.events.exception;
 
-public interface IExceptionMessage {
-
-
-}
+public interface IExceptionMessage {}

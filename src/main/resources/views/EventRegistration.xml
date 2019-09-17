@@ -13,6 +13,7 @@
 		<field name="address" />
 		<field name="registrationDate" />
 		<field name="amount" />
+		<field name="emailSent" title="Email Sent" readonly="true" />
 
 	</grid>
 
@@ -29,16 +30,16 @@
 			<field name="event" onChange="action-method-set-amount" />
 			<field name="email" widget="email" />
 			<field name="address" />
-			<field name="registrationDate" onChange="action-method-set-amount"/>
+			<field name="registrationDate" onChange="action-method-set-amount" />
 			<field name="amount" />
 
 
 		</panel>
 	</form>
-	
+
 	<action-group name="action.group.registration.on.save">
 		<action name="action-event-registration-validate" />
-		<action name="save"/>
+		<action name="save" />
 		<action name="action.method.set.total" />
 	</action-group>
 
@@ -48,7 +49,7 @@
 		<error
 			if="registrationDate.isBefore(event.getRegistrationOpen().atStartOfDay()) || registrationDate.isAfter(event.getRegistrationClose().atStartOfDay())"
 			message="Please enter date within Registration Open Period" />
-       
+
 	</action-validate>
 
 	<action-method name="action.method.set.total">

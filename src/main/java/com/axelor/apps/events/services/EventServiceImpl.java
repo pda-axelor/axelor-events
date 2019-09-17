@@ -1,12 +1,14 @@
 package com.axelor.apps.events.services;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 import com.axelor.apps.events.db.Event;
 import com.axelor.apps.events.db.EventRegistration;
 import com.axelor.apps.events.db.repo.EventRepository;
+import com.axelor.apps.message.db.Template;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
-import java.math.BigDecimal;
-import java.util.List;
 
 public class EventServiceImpl implements EventService {
 
@@ -28,4 +30,5 @@ public class EventServiceImpl implements EventService {
         event.getEventFees().multiply(BigDecimal.valueOf(entry)).subtract(totalAmount));
     eventRepo.save(event);
   }
+
 }
