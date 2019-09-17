@@ -5,10 +5,10 @@
 
 
 	<form name="event-pop-up-form" title="Import Wizard"
-		model="com.axelor.apps.events.db.EventWizard" css="panel-violet" onNew="">
+		model="com.axelor.apps.events.db.EventWizard" css="panel-violet" >
 		<panel name="mainPanel">
 			<field name="$file" type="many-to-one" title="File"
-				required="true" target="com.axelor.meta.db.MetaFile" />
+				required="true" target="com.axelor.meta.db.MetaFile" widget="binary-link"/>
 			
 			<button name="btnImport" icon="fa-th" title="Import"
 				 onClick="com.axelor.apps.events.web.EventController:validateFile" />

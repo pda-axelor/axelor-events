@@ -27,7 +27,7 @@
 
 
 			<field name="name" />
-			<field name="event" onChange="action-method-set-amount" />
+			<field name="event" onChange="action-method-set-amount" hideIf="__parent__"/>
 			<field name="email" widget="email" />
 			<field name="address" />
 			<field name="registrationDate" onChange="action-method-set-amount" />

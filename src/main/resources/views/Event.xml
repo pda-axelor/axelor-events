@@ -32,7 +32,7 @@
 			<button name="btnPrint" icon="fa-print" title="Print"
 				onClick="action-event-report" readonlyIf="!id" />
 			<button name="sendEmailBtn" title="Send Email" icon="fa-envelope"
-				showIf="id" onClick="com.axelor.apps.events.web.EventController:sendEmails" />
+				readonlyIf="!id" onClick="com.axelor.apps.events.web.EventController:sendEmails" />
 		</toolbar>
 
 		<panel name="detailsPanel" colSpan="4">
