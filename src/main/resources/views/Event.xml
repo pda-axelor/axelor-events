@@ -28,7 +28,7 @@
 
 		<toolbar>
 			<button name="btnImport" icon="fa-download" title="Import Registrations"
-				onClick="action.event.wizard.view" readonlyIf="!id" />
+				onClick="action-event-wizard-view" readonlyIf="!id" />
 			<button name="btnPrint" icon="fa-print" title="Print"
 				onClick="action-event-report" readonlyIf="!id" />
 			<button name="sendEmailBtn" title="Send Email" icon="fa-envelope"
@@ -112,9 +112,9 @@
 			message="Registration Open Date should be before Registration Close Date" />
 	</action-validate>
 
-	<action-view name="action.event.wizard.view" model="com.axelor.apps.events.db.EventWizard"
+	<action-view name="action-event-wizard-view" model="com.axelor.apps.events.db.EventWizard"
 		title="Data Import">
-		<view type="form" name="event-pop-up-form" />
+		<view type="form" name="event-pop-up-form" />		
 	</action-view>
 
 	<action-report name="action-event-report" design="event.rptdesign"

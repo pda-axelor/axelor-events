@@ -1,30 +1,26 @@
 package com.axelor.apps.events.web;
 
-import java.io.File;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
-import java.util.List;
+import java.util.LinkedHashMap;
 
 import javax.mail.MessagingException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.axelor.app.AppSettings;
 import com.axelor.apps.events.services.EventRegistrationService;
+import com.axelor.apps.events.services.EventService;
 import com.axelor.apps.events.services.EventsTemplateMessageService;
 import com.axelor.apps.message.db.Message;
 import com.axelor.apps.message.db.Template;
 import com.axelor.apps.message.db.repo.TemplateRepository;
-import com.axelor.apps.tool.file.CsvTool;
 import com.axelor.db.Model;
 import com.axelor.exception.AxelorException;
-import com.axelor.meta.db.MetaFile;
 import com.axelor.meta.db.repo.MetaFileRepository;
 import com.axelor.meta.schema.actions.ActionView;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 
 public class EventController {
@@ -34,6 +30,8 @@ public class EventController {
 	@Inject
 	EventRegistrationService registrationService;
 	@Inject
+	EventService eventService;
+	@Inject
 	MetaFileRepository metaFileRepo;
 	@Inject
 	private EventsTemplateMessageService eventTemplateMessageService;
@@ -41,15 +39,18 @@ public class EventController {
 	private TemplateRepository templateRepo;
 
 	public void validateFile(ActionRequest request, ActionResponse response) throws IOException {
-		
-	/*	ObjectMapper mapper = new ObjectMapper();	    
-		MetaFile metaFile = mapper.convertValue(request.getContext().get("file"), MetaFile.class);	
-        File data = new File(metaFile.getFilePath());
-		System.out.println(metaFile.getFilePath());
-		
-		Importer importer = new CSVImporter();
 
-    */
+		LinkedHashMap metaFile = (LinkedHashMap) request.getContext().get("file");				
+		if (metaFile == null) {
+			response.setError("Please select a File First");
+			response.setReload(true);
+		} else if (!(metaFile.get("fileType").toString().equals("text/csv"))) {
+			response.setError("A CSV File must be selected");
+			response.setReload(true);
+		} else {
+			eventService.importData((String)metaFile.get("file_path"));
+			response.setReload(true);
+		}
 	}
 
 	public void sendEmails(ActionRequest request, ActionResponse response) throws MessagingException {

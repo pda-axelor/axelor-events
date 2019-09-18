@@ -17,26 +17,20 @@ import java.util.stream.Collectors;
 import javax.mail.MessagingException;
 
 public class EventsTemplateMessageService extends TemplateMessageServiceImpl {
-  @Inject
-  public EventsTemplateMessageService(MessageService messageService) {
-    super(messageService);
-    // TODO Auto-generated constructor stub
-  }
+	@Inject
+	public EventsTemplateMessageService(MessageService messageService) {
+		super(messageService);
+		// TODO Auto-generated constructor stub
+	}
 
-  @Override
-  public Message generateAndSendMessage(Model model, Template template)
-      throws ClassNotFoundException, InstantiationException, IllegalAccessException,
-          AxelorException, IOException, MessagingException {
-    Event event = Beans.get(EventRepository.class).find(model.getId());
-    List<EventRegistration> list =
-        event
-            .getEventRegistrationList()
-            .stream()
-            .filter(r -> r.getEmailSent() == false)
-            .collect(Collectors.toList());
-    List<String> emailsList = list.stream().map(l -> l.getEmail()).collect(Collectors.toList());
-    template.setSubject("Congratulations, You have been registered successfully for the Event!");
-    template.setToRecipients(emailsList.toString().replace("[", "").replace("]", ""));
-    return super.generateAndSendMessage(model, template);
-  }
+	@Override
+	public Message generateAndSendMessage(Model model, Template template) throws ClassNotFoundException,
+			InstantiationException, IllegalAccessException, AxelorException, IOException, MessagingException {
+		Event event = Beans.get(EventRepository.class).find(model.getId());
+		List<String> emailsList = event.getEventRegistrationList().stream().filter(r -> r.getEmailSent() == false)
+				.map(l -> l.getEmail()).collect(Collectors.toList());
+		template.setSubject("Congratulations, You have been registered successfully for the Event!");
+		template.setToRecipients(emailsList.toString().replace("[", "").replace("]", ""));
+		return super.generateAndSendMessage(model, template);
+	}
 }
