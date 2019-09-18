@@ -11,6 +11,7 @@
 	<input file="event_eventRegistration.csv" separator=";"
 		type="com.axelor.apps.events.db.EventRegistration">
 		<bind to="registrationDate" column="registrationDate" adapter="LocalDateTime" />
+		<bind to="event.id" column="event"/>
 	</input>
 </csv-inputs>
 

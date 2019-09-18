@@ -39,7 +39,7 @@ public class EventController {
 	private TemplateRepository templateRepo;
 
 	public void validateFile(ActionRequest request, ActionResponse response) throws IOException {
-
+       long eventId = Long.valueOf((Integer)request.getContext().get("_id"));
 		LinkedHashMap metaFile = (LinkedHashMap) request.getContext().get("file");				
 		if (metaFile == null) {
 			response.setError("Please select a File First");
@@ -48,7 +48,7 @@ public class EventController {
 			response.setError("A CSV File must be selected");
 			response.setReload(true);
 		} else {
-			eventService.importData((String)metaFile.get("file_path"));
+			eventService.importData((String)metaFile.get("file_path"),eventId);
 			response.setReload(true);
 		}
 	}

@@ -44,7 +44,7 @@
 	</action-group>
 
 	<action-validate name="action-event-registration-validate">
-		<error if="event.getCapacity() &lt; event.getTotalEntry()"
+		<error if="event.getCapacity() &lt; event.getTotalEntry() || event.getCapacity() &#61;&#61; event.getTotalEntry()"
 			message="Sorry, Event Registrations are Full" />
 		<error
 			if="registrationDate.isBefore(event.getRegistrationOpen().atStartOfDay()) || registrationDate.isAfter(event.getRegistrationClose().atStartOfDay())"
