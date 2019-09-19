@@ -16,10 +16,9 @@ public class EventRegistrationController {
 
   @Inject EventRegistrationService eventRegistrationService;
 
-  public void setTotal(ActionRequest request, ActionResponse response) {
+  public void setTotal(ActionRequest request, ActionResponse response) {	 
     EventRegistration eventRegistration = request.getContext().asType(EventRegistration.class);
-    Event event = Beans.get(EventRepository.class).find(eventRegistration.getEvent().getId());
-    eventService.calculateTotal(event);
+    eventService.calculateTotal(eventRegistration.getEvent().getId(),null);
   }
 
   public void setAmount(ActionRequest request, ActionResponse response) {

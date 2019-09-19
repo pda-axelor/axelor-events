@@ -49,14 +49,17 @@
 		</panel>
 		<panel-tabs>
 			<panel name="discountPanel" title="Discount">
-				<field name="discount" colSpan="12"/>
-			</panel>
-			<panel name="eventRegistrationListPanel" title="Registrations">
-				<field name="eventRegistrationList" colSpan="12"/>
+				<field name="discount" colSpan="12" />
 			</panel>
 
+			<panel-related field="eventRegistrationList"
+				onChange="action-method-registration-on-change" name="eventRegistrationPanel"
+				colSpan="12">
+			</panel-related>
+
+
 			<panel name="eventsDescriptionPanel" title="Description">
-				<field name="description" widget="html" colSpan="12"/>
+				<field name="description" widget="html" colSpan="12" />
 			</panel>
 
 		</panel-tabs>
@@ -114,12 +117,17 @@
 
 	<action-view name="action-event-wizard-view" model="com.axelor.apps.events.db.EventWizard"
 		title="Data Import">
-		<view type="form" name="event-pop-up-form" />		
+		<view type="form" name="event-pop-up-form" />
 	</action-view>
 
 	<action-report name="action-event-report" design="event.rptdesign"
 		output="event" format="pdf">
 		<param name="eventId" expr="eval: id" />
 	</action-report>
+	
+	<action-method name="action-method-registration-on-change">
+		<call class="com.axelor.apps.events.web.EventController"
+			method="setEventRegistration" />
+	</action-method>
 
 </object-views>

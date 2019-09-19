@@ -1,10 +1,12 @@
 package com.axelor.apps.events.services;
 
-import com.axelor.apps.events.db.Event;
+import java.util.List;
+
+import com.axelor.apps.events.db.EventRegistration;
 
 public interface EventService {
 	
-  public void calculateTotal(Event event);
+  public boolean calculateTotal(Long eventId, List<EventRegistration> registrationsList);
   public void importData(String dataFileName,long id);
 
 }
