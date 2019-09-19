@@ -37,27 +37,27 @@ public class EventsTemplateMessageService extends TemplateMessageServiceImpl {
 	public Message generateAndSendMessage(Model model, Template template) throws ClassNotFoundException,
 			InstantiationException, IllegalAccessException, AxelorException, IOException, MessagingException {
 		Event event = Beans.get(EventRepository.class).find(model.getId());
-		List<String> emailsList = event.getEventRegistrationList().stream().filter(r -> r.getEmailSent() == false && r.getEmail()!=null)
-				.map(l -> l.getEmail()).collect(Collectors.toList());
-		
-		if(emailsList.isEmpty())		
-		  throw new AxelorException(TraceBackRepository.CATEGORY_NO_VALUE,IExceptionMessage.EMPTY_EMAILS);
-			
+		List<String> emailsList = event.getEventRegistrationList().stream()
+				.filter(r -> r.getEmailSent() == false && r.getEmail() != null).map(l -> l.getEmail())
+				.collect(Collectors.toList());
+
+		if (emailsList.isEmpty())
+			throw new AxelorException(TraceBackRepository.CATEGORY_NO_VALUE, IExceptionMessage.EMPTY_EMAILS);
+
 		template.setSubject("Congratulations, You have been registered successfully for the Event!");
 		template.setToRecipients(emailsList.toString().replace("[", "").replace("]", ""));
 		Message message = super.generateAndSendMessage(model, template);
 		List<EventRegistration> registrations = null;
-		if(message!=null)
-		{
-		 registrations = event.getEventRegistrationList().stream().filter(l->l.getEmail()!=null).collect(Collectors.toList());
-		for(EventRegistration l:registrations)
-		{
-			l.setEmailSent(true);
-			eventRegistrationRepo.save(l);
+		if (message != null) {
+			registrations = event.getEventRegistrationList().stream().filter(l -> l.getEmail() != null)
+					.collect(Collectors.toList());
+			for (EventRegistration l : registrations) {
+				l.setEmailSent(true);
+				eventRegistrationRepo.save(l);
+			}
 		}
-		}
-		
+
 		return message;
 	}
-	
+
 }

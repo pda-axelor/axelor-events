@@ -49,14 +49,14 @@
 		</panel>
 		<panel-tabs>
 			<panel name="discountPanel" title="Discount">
-				<field name="discount" />
+				<field name="discount" colSpan="12"/>
 			</panel>
 			<panel name="eventRegistrationListPanel" title="Registrations">
-				<field name="eventRegistrationList" />
+				<field name="eventRegistrationList" colSpan="12"/>
 			</panel>
 
 			<panel name="eventsDescriptionPanel" title="Description">
-				<field name="description" widget="html" />
+				<field name="description" widget="html" colSpan="12"/>
 			</panel>
 
 		</panel-tabs>

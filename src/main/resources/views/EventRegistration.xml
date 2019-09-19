@@ -20,14 +20,13 @@
 
 
 	<form name="event-registration-form" title="Event Registration"
-		model="com.axelor.apps.events.db.EventRegistration" width="large"
-		onSave="action-group-registration-on-save">
+		model="com.axelor.apps.events.db.EventRegistration" onSave="action-group-registration-on-save" onNew="action-set-event">
 
 		<panel name="registration-overview">
 
 
 			<field name="name" />
-			<field name="event" onChange="action-method-set-amount" hideIf="__parent__"/>
+			<field name="event" if="!(__parent__)" onChange="action-method-set-amount"   />
 			<field name="email" widget="email" />
 			<field name="address" />
 			<field name="registrationDate" onChange="action-method-set-amount" />
@@ -44,7 +43,8 @@
 	</action-group>
 
 	<action-validate name="action-event-registration-validate">
-		<error if="event.getCapacity() &lt; event.getTotalEntry() || event.getCapacity() &#61;&#61; event.getTotalEntry()"
+		<error
+			if="event.getCapacity() &lt; event.getTotalEntry() || event.getCapacity() &#61;&#61; event.getTotalEntry()"
 			message="Sorry, Event Registrations are Full" />
 		<error
 			if="registrationDate.isBefore(event.getRegistrationOpen().atStartOfDay()) || registrationDate.isAfter(event.getRegistrationClose().atStartOfDay())"
@@ -61,5 +61,10 @@
 		<call class="com.axelor.apps.events.web.EventRegistrationController"
 			method="setAmount" />
 	</action-method>
-
+	
+	<action-record name="action-set-event" model="com.axelor.apps.events.db.EventRegistration">
+	<field name="event" expr="eval: __parent__" />
+	</action-record>
+	
+	
 </object-views>
