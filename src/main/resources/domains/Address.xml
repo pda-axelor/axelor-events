@@ -6,8 +6,7 @@
 	<module name="events" package="com.axelor.apps.events.db" />
 
 	<entity sequential="true" name="Address" lang="java">
-
-		
+	
 		<string name="houseNo" title="Flat/House No." />
 		<string name="street" title="Street" />
 		<string name="landmark" title="LandMark" />
@@ -16,7 +15,6 @@
 		<string name="fullName" title="Full Name" readonly="true"
 	      namecolumn="true" />
 		
-
 	</entity>
 
 </domain-models>

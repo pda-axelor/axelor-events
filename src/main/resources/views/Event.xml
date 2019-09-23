@@ -104,8 +104,6 @@
 
 
 	<action-validate name="action-event-validate">
-		<error if="startDate.isBefore(__datetime__.toLocalDateTime())"
-			message="Event Start Date cannot be today or in past" />
 		<error
 			if="startDate.isBefore(registrationClose.atStartOfDay()) || startDate.equals(registrationClose.atStartOfDay())"
 			message="Start Date should be after Registration Close Date" />
@@ -113,6 +111,7 @@
 		<error
 			if="registrationOpen > registrationClose || registrationOpen == registrationClose "
 			message="Registration Open Date should be before Registration Close Date" />
+		<error if="capacity &lt; totalEntry" message="Capacity cannnot be less than Total Entries" />
 	</action-validate>
 
 	<action-view name="action-event-wizard-view" model="com.axelor.apps.events.db.EventWizard"
@@ -124,10 +123,9 @@
 		output="event" format="pdf">
 		<param name="eventId" expr="eval: id" />
 	</action-report>
-	
+
 	<action-method name="action-method-registration-on-change">
-		<call class="com.axelor.apps.events.web.EventController"
-			method="setEventRegistration" />
+		<call class="com.axelor.apps.events.web.EventController" method="setEventRegistration" />
 	</action-method>
 
 </object-views>

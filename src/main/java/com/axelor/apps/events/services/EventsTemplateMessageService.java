@@ -29,7 +29,6 @@ public class EventsTemplateMessageService extends TemplateMessageServiceImpl {
 	@Inject
 	public EventsTemplateMessageService(MessageService messageService) {
 		super(messageService);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

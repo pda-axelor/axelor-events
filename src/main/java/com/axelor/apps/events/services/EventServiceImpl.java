@@ -4,7 +4,6 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import com.axelor.app.AppSettings;
 import com.axelor.apps.events.db.Event;

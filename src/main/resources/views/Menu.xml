@@ -6,7 +6,7 @@
 
 
 	<menuitem name="axelor-events-root" title="Events" order="-86"
-		icon="" />
+		icon="fa-university" icon-background="purple"/>
 
 	<menuitem name="axelor-events-root-event" parent="axelor-events-root"
 		title="Event" action="action.events.event.view" order="1" />
@@ -37,7 +37,5 @@
 		<view type="grid" name="address-grid" />
 		<view type="form" name="address-form" />
 	</action-view>
-
-
 
 </object-views>

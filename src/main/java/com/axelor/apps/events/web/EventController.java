@@ -1,16 +1,11 @@
 package com.axelor.apps.events.web;
 
 import java.io.IOException;
-import java.lang.invoke.MethodHandles;
 import java.util.LinkedHashMap;
 
 import javax.mail.MessagingException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.axelor.apps.events.db.Event;
-import com.axelor.apps.events.db.repo.EventRepository;
 import com.axelor.apps.events.services.EventRegistrationService;
 import com.axelor.apps.events.services.EventService;
 import com.axelor.apps.events.services.EventsTemplateMessageService;
@@ -19,7 +14,6 @@ import com.axelor.apps.message.db.Template;
 import com.axelor.apps.message.db.repo.TemplateRepository;
 import com.axelor.db.Model;
 import com.axelor.exception.AxelorException;
-import com.axelor.inject.Beans;
 import com.axelor.meta.db.repo.MetaFileRepository;
 import com.axelor.meta.schema.actions.ActionView;
 import com.axelor.rpc.ActionRequest;
@@ -27,8 +21,6 @@ import com.axelor.rpc.ActionResponse;
 import com.google.inject.Inject;
 
 public class EventController {
-
-	private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	@Inject
 	EventRegistrationService registrationService;
@@ -57,6 +49,7 @@ public class EventController {
 
 	public void validateFile(ActionRequest request, ActionResponse response) throws IOException {
 		long eventId = Long.valueOf((Integer) request.getContext().get("_id"));
+		@SuppressWarnings("rawtypes")
 		LinkedHashMap metaFile = (LinkedHashMap) request.getContext().get("file");
 		if (metaFile == null) {
 			response.setError("Please select a File First");
@@ -81,17 +74,20 @@ public class EventController {
 				response.setView(ActionView.define("Message").model(Message.class.getName()).add("form", "message-form")
 						.context("_showRecord", String.valueOf(message.getId())).map());
 			}
-
+			else
+			{
+				response.setFlash("No Template Found for Event");
+			}
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			response.setAlert(e.getMessage());
 		} catch (InstantiationException e) {
-			e.printStackTrace();
+			response.setAlert(e.getMessage());
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			response.setAlert(e.getMessage());
 		} catch (AxelorException e) {
-			e.printStackTrace();
+			response.setAlert(e.getMessage());
 		} catch (IOException e) {
-			e.printStackTrace();
+			response.setAlert(e.getMessage());
 		}
 	}
 }
