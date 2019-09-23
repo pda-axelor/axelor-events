@@ -1,7 +1,10 @@
 package com.axelor.apps.events.services;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +16,7 @@ import com.axelor.apps.events.db.repo.EventRepository;
 import com.axelor.data.Importer;
 import com.axelor.data.csv.CSVImporter;
 import com.axelor.inject.Beans;
+import com.axelor.meta.MetaScanner;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 
@@ -64,16 +68,27 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public void importData(String dataFileName, long id) {
+	public void importData(String dataFileName, long id) throws IOException {
 
 		String uploadDir = AppSettings.get().get("file.upload.dir");
 		File dataFile = new File(uploadDir + "/" + dataFileName);
-		File configFile = new File(
-				"/home/axelor/Projects/ABS/Project ABS/abs-webapp/modules/abs/axelor-events/src/main/resources/demo/events-config.xml");
+		File configFile = this.getConfigFile();
 		Importer importer = new CSVImporter(configFile.getAbsolutePath(), dataFile.getParent());
 		importer.run();
+		configFile.delete();
 		dataFile.delete();
 		this.setRegistrations(id);
+	}
+
+	public File getConfigFile() throws IOException {
+		List<URL> list = MetaScanner.findAll("events-config.xml");
+		byte[] b = new byte[1000];
+		list.get(0).openStream().read(b);
+		File configFile = new File("events-config.xml");
+		FileOutputStream outputStream = new FileOutputStream(configFile);
+		outputStream.write(b);
+		outputStream.close();
+		return configFile;
 	}
 
 	@Transactional

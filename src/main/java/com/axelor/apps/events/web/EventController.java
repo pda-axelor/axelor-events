@@ -1,6 +1,7 @@
 package com.axelor.apps.events.web;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.LinkedHashMap;
 
 import javax.mail.MessagingException;

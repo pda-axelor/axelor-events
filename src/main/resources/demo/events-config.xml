@@ -8,7 +8,7 @@
 		<option name="format" value="dd/MM/yy HH:mm" />
 	</adapter>
 
-	<input file="event_eventRegistration9.csv" separator=";"
+	<input file="event_eventRegistration7.csv" separator=";"
 		type="com.axelor.apps.events.db.EventRegistration">
 		<bind to="registrationDate" column="registrationDate" adapter="LocalDateTime" />
 		<bind to="event.id" column="event"/>
