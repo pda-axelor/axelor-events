@@ -51,14 +51,15 @@ public class EventController {
 		@SuppressWarnings("rawtypes")
 		LinkedHashMap metaFile = (LinkedHashMap) request.getContext().get("file");
 		if (metaFile == null) {
-			response.setError("Please select a File First");
+			response.setFlash("Please select a Data File First");
 			response.setReload(true);
 		} else if (!(metaFile.get("fileType").toString().equals("text/csv"))) {
-			response.setError("A CSV File must be selected");
+			response.setFlash("A CSV File must be selected");
 			response.setReload(true);
 		} else {
 			try {
 				eventService.importData((String) metaFile.get("file_path"), eventId);
+				response.setFlash("Import Successful !");
 				response.setReload(true);
 			} catch (IndexOutOfBoundsException e) {
 				response.setFlash("Please specify a config file first");

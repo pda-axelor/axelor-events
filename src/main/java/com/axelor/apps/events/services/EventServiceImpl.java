@@ -42,7 +42,7 @@ public class EventServiceImpl implements EventService {
 			if (!temp.isPresent()) {
 				flag = true;
 			} else {
-				if (event.getTotalEntry() < event.getCapacity()  ) {
+				if (event.getTotalEntry() < event.getCapacity()) {
 					EventRegistration r1 = temp.get();
 					EventRegistration registration = new EventRegistration();
 					registration.setEvent(event);
@@ -58,17 +58,17 @@ public class EventServiceImpl implements EventService {
 			}
 		}
 
-		if (flag == false) {
-			List<EventRegistration> list = event.getEventRegistrationList();
-			int entry = list.size();
+		List<EventRegistration> list = event.getEventRegistrationList();
+		int entry = list.size();
 
-			for (EventRegistration l : list) {
-				totalAmount = totalAmount.add(l.getAmount());
-			}
-			event.setTotalEntry(entry);
-			event.setAmountCollected(totalAmount);
-			event.setTotalDiscount(event.getEventFees().multiply(BigDecimal.valueOf(entry)).subtract(totalAmount));
-			eventRepo.save(event);
+		for (EventRegistration l : list) {
+			totalAmount = totalAmount.add(l.getAmount());
+		}
+		event.setTotalEntry(entry);
+		event.setAmountCollected(totalAmount);
+		event.setTotalDiscount(event.getEventFees().multiply(BigDecimal.valueOf(entry)).subtract(totalAmount));
+		eventRepo.save(event);
+		if (flag == false) {
 			return true;
 		}
 		return false;

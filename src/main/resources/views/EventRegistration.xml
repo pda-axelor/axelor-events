@@ -51,7 +51,7 @@
 	</action-record>
 
 	<action-group name="action-group-registration-on-save">
-		<action name="action-event-registration-validate" />
+		<action name="action-event-registration-validate" if="!id"/>
 		<action name="save" />
 		<action name="action-method-set-total" />
 	</action-group>

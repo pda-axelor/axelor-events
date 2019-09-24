@@ -5,6 +5,7 @@ import com.axelor.apps.events.db.EventRegistration;
 import com.axelor.apps.events.db.repo.EventRepository;
 import com.axelor.apps.events.services.EventRegistrationService;
 import com.axelor.apps.events.services.EventService;
+import com.axelor.exception.AxelorException;
 import com.axelor.inject.Beans;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
@@ -16,7 +17,7 @@ public class EventRegistrationController {
 
   @Inject EventRegistrationService eventRegistrationService;
 
-  public void setTotal(ActionRequest request, ActionResponse response) {	 
+  public void setTotal(ActionRequest request, ActionResponse response) throws AxelorException {	 
     EventRegistration eventRegistration = request.getContext().asType(EventRegistration.class);
     eventService.calculateTotal(eventRegistration.getEvent().getId(),null);
   }
