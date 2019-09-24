@@ -48,7 +48,7 @@ public class EventController {
 
 	}
 
-	public void validateFile(ActionRequest request, ActionResponse response) throws IOException {
+	public void validateFile(ActionRequest request, ActionResponse response) throws Exception {
 		long eventId = Long.valueOf((Integer) request.getContext().get("_id"));
 		@SuppressWarnings("rawtypes")
 		LinkedHashMap metaFile = (LinkedHashMap) request.getContext().get("file");
@@ -59,8 +59,12 @@ public class EventController {
 			response.setError("A CSV File must be selected");
 			response.setReload(true);
 		} else {
-			eventService.importData((String) metaFile.get("file_path"), eventId);
-			response.setReload(true);
+			try {
+				eventService.importData((String) metaFile.get("file_path"), eventId);
+				response.setReload(true);
+			} catch (IndexOutOfBoundsException e) {
+				response.setFlash("Please specify a config file first");
+			}
 		}
 	}
 
@@ -74,9 +78,7 @@ public class EventController {
 				Message message = eventTemplateMessageService.generateAndSendMessage(model, template);
 				response.setView(ActionView.define("Message").model(Message.class.getName()).add("form", "message-form")
 						.context("_showRecord", String.valueOf(message.getId())).map());
-			}
-			else
-			{
+			} else {
 				response.setFlash("No Template Found for Event");
 			}
 		} catch (ClassNotFoundException e) {
