@@ -37,15 +37,13 @@ public class EventController {
 	public void setEventRegistration(ActionRequest request, ActionResponse response) {
 
 		Event eventContext = request.getContext().asType(Event.class);
-		if (eventContext.getCapacity() <= eventContext.getTotalEntry()) {
-			response.setFlash("Sorry, Registrations are Full for this Event");
-			response.setReload(true);
-
-		} else {
+		try {
 			response.setReload(
 					eventService.calculateTotal(eventContext.getId(), eventContext.getEventRegistrationList()));
+		} catch (AxelorException e) {
+			response.setFlash(e.getMessage());
+			response.setReload(true);
 		}
-
 	}
 
 	public void validateFile(ActionRequest request, ActionResponse response) throws Exception {

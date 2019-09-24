@@ -2,7 +2,6 @@ package com.axelor.apps.events.services;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.List;
@@ -13,6 +12,7 @@ import com.axelor.apps.events.db.Event;
 import com.axelor.apps.events.db.EventRegistration;
 import com.axelor.apps.events.db.repo.EventRegistrationRepository;
 import com.axelor.apps.events.db.repo.EventRepository;
+import com.axelor.apps.events.exception.IExceptionMessage;
 import com.axelor.data.Importer;
 import com.axelor.data.csv.CSVImporter;
 import com.axelor.exception.AxelorException;
@@ -32,7 +32,7 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	@Transactional
-	public boolean calculateTotal(Long eventId, List<EventRegistration> registrations) {
+	public boolean calculateTotal(Long eventId, List<EventRegistration> registrations) throws AxelorException {
 
 		BigDecimal totalAmount = BigDecimal.ZERO;
 		boolean flag = false;
@@ -42,14 +42,19 @@ public class EventServiceImpl implements EventService {
 			if (!temp.isPresent()) {
 				flag = true;
 			} else {
-				EventRegistration r1 = temp.get();
-				EventRegistration registration = new EventRegistration();
-				registration.setEvent(event);
-				registration.setName(r1.getName());
-				registration.setEmailSent(false);
-				registration.setRegistrationDate(r1.getRegistrationDate());
-				registration.setAmount(r1.getAmount());
-				eventRegistrationRepo.save(registration);
+				if (event.getTotalEntry() < event.getCapacity()  ) {
+					EventRegistration r1 = temp.get();
+					EventRegistration registration = new EventRegistration();
+					registration.setEvent(event);
+					registration.setName(r1.getName());
+					registration.setEmailSent(false);
+					registration.setRegistrationDate(r1.getRegistrationDate());
+					registration.setAmount(r1.getAmount());
+					eventRegistrationRepo.save(registration);
+				} else {
+					throw new AxelorException(TraceBackRepository.CATEGORY_INCONSISTENCY,
+							IExceptionMessage.REGISTRATIONS_FULL);
+				}
 			}
 		}
 
