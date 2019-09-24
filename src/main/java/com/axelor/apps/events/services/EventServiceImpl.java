@@ -66,7 +66,12 @@ public class EventServiceImpl implements EventService {
 		}
 		event.setTotalEntry(entry);
 		event.setAmountCollected(totalAmount);
-		event.setTotalDiscount(event.getEventFees().multiply(BigDecimal.valueOf(entry)).subtract(totalAmount));
+		BigDecimal totalDiscount = event.getEventFees().multiply(BigDecimal.valueOf(entry)).subtract(totalAmount);
+		if (totalDiscount.compareTo(BigDecimal.ZERO) > 0) {
+			event.setTotalDiscount(totalDiscount);
+		} else {
+			event.setTotalDiscount(BigDecimal.ZERO);
+		}
 		eventRepo.save(event);
 		if (flag == false) {
 			return true;

@@ -39,7 +39,7 @@
 			<field name="reference" colSpan="12" />
 			<field name="venue" />
 			<field name="capacity" />
-			<field name="eventFees" />
+			<field name="eventFees" readonlyIf="eventFees != 0"/>
 
 
 			<field name="totalEntry" />
@@ -71,8 +71,6 @@
 			<field name="registrationOpen" required="true" />
 			<field name="registrationClose" required="true" />
 		</panel>
-
-
 	</form>
 
 	<cards name="event-cards" title="Event" model="com.axelor.apps.events.db.Event"
@@ -90,14 +88,15 @@
 	
 			  <div class="span8">
 			    <span>
-			    {{startDate}}<br/>
-			    {{endDate}}</span>
+			   Start Date : {{startDate}}<br/>
+			   End Date : {{endDate}}</span><br/><br/>
 			  </div>
+			  <div class="span12" style="margin-left:0px;">
+	  			<strong>Event Fees : {{eventFees}}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+	  			<strong>Capacity : {{capacity}}</strong>
 			</div>
-			<div class="span12" ng-bind-html="description"></div>
-			<div class="span12" style="margin-left:0px;">
-	  			<span >{{totalFees}}</span>
-			</div>
+			
+		
 		]]>
 		</template>
 	</cards>
